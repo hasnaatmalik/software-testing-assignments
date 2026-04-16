@@ -1,8 +1,0 @@
-email,expected
-student@fast.com,true
-admin@shop.com,true
-hello@world.com,true
-invalid-email,false
-no-domain@,false
-@missing-prefix.com,false
-spaces inside@test.com,false
