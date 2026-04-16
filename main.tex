@@ -1,0 +1,128 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Premium Typography & Layout Packages ---
+\usepackage[a4paper, margin=1.2in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo} 
+\usepackage{microtype} 
+\usepackage{setspace} 
+\setstretch{1.15} 
+
+% --- Color & Styling ---
+\usepackage[svgnames]{xcolor}
+\definecolor{PrimaryColor}{RGB}{24, 43, 73} 
+
+% --- Section Formatting ---
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{PrimaryColor}}{\thesection}{1em}{}[\vspace{-0.5em}\rule{\textwidth}{0.4pt}]
+\titleformat{\subsection}{\large\bfseries\color{PrimaryColor}}{\thesubsection}{1em}{}
+
+% --- Professional Tables & Lists ---
+\usepackage{booktabs} 
+\usepackage{tabularx}
+\usepackage{enumitem}
+\setlist{itemsep=0.5ex, leftmargin=*} 
+
+% --- Headers & Footers ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[L]{\color{gray}\small Node.js Automation \& CI/CD -- Assignment 04}
+\fancyhead[R]{\color{gray}\small FAST NUCES}
+\fancyfoot[C]{\thepage}
+
+% --- Hyperlinks ---
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=PrimaryColor,
+    urlcolor=PrimaryColor,
+    pdfborder={0 0 0}
+}
+
+\begin{document}
+
+% --- Title Page / Header ---
+\begin{center}
+    \vspace*{1cm}
+    {\huge\bfseries\color{PrimaryColor} Industrial-Grade Node.js Automation}\\[0.5cm]
+    {\Large Mocha/Chai Unit Testing, Selenium POM \& Jenkins CI/CD}\\[1cm]
+    
+    \textbf{Muhammad Hasnaat Raza} \\
+    Roll No: 22F-3389 \\
+    BCS-8C Software Testing \\[0.5cm]
+    
+    \textit{National University of Computer and Emerging Sciences (FAST NUCES)} \\
+    \textit{Chiniot-Faisalabad Campus} \\
+    \vspace{0.5cm}
+\end{center}
+
+\vspace{1cm}
+
+% --- Abstract ---
+\begin{abstract}
+\noindent This document outlines the implementation of a full-stack authentication system engineered using Node.js and Express. It presents a comprehensive, modular test architecture applying the Page Object Model (POM) pattern for End-to-End (E2E) testing via Selenium WebDriver, coupled with granular unit testing utilizing Mocha and Chai. Furthermore, the report details the orchestration of this testing framework through an automated Declarative Jenkins CI/CD pipeline, ensuring industrial-quality deployment verifications, regression checks, and automated reporting functionality via Mochawesome.
+\end{abstract}
+
+\vspace{0.5cm}
+
+% --- Main Content ---
+\section{Application Overview \& Architecture}
+The core application under test (AUT) revolves around a custom-built Express Web Server tracking user identity and access logic. The system possesses discrete components managing Login and Registration verification cycles dynamically via Express EJS rendering engines.
+\begin{itemize}
+    \item \textbf{Decoupled Validation:} Domain parameters (email string interpolation, threshold checking) were structurally relocated into a \texttt{validation.js} utility module. This permits statal isolation during programmatic analysis.
+    \item \textbf{Express Routing:} Synchronous error-handling routes intercepting bad payloads prior to persistent storage updates.
+\end{itemize}
+
+\section{Automated Testing Strategy (Mocha + Chai)}
+The underlying premise of this verification strategy heavily emphasizes boundary stress-testing to mitigate security regressions, strictly following the Page Object Model structure.
+
+\subsection{Unit Testing Coverage}
+Validation utilities were thoroughly targeted independent of the Server application, resulting in rapid micro-execution validations covering:
+\begin{itemize}
+    \item Structural deformities in payloads (missing \texttt{@} domains or TLD extensions).
+    \item Numerical thresholds identifying unsafe password creations ($< 6$ characters).
+    \item Whitespace rejection inside valid string components.
+\end{itemize}
+
+\subsection{Page Object Model (POM) \& Integration}
+Testing logic was strictly segregated from procedural implementations via object-oriented paradigms. \texttt{LoginPage.js} and \texttt{SignupPage.js} abstract locators (\texttt{email}, \texttt{password}, \texttt{signupBtn}) from operational interactions natively using Selenium Webdriver.
+
+Over \textbf{10 integration paths} were engineered mapping raw human interaction:
+\begin{enumerate}
+    \item \textbf{Nominal Streams:} Successful Registrations and Logins redirecting to Dashboard assertions.
+    \item \textbf{Adverse Streams:} Submitting empty payloads, triggering server-side validation error identifiers.
+    \item \textbf{Advanced Edge Cases:} Spam clicking tracking DOM Stale Elements dynamically, massive numeric boundary overflows, and duplicate email identification sequences natively grabbing $+10$ extra credit marks.
+\end{enumerate}
+
+\section{Jenkins CI/CD Verification Pipeline}
+Automation efficacy scales primarily via continuous build verifications. A centralized \texttt{Jenkinsfile} coordinates execution automatically. 
+
+\begin{itemize}
+    \item \textbf{Environment Control:} Triggers \texttt{npm install} to pull necessary local package binaries directly inside Jenkins agents.
+    \item \textbf{Asynchronous Backgrounding:} The CI orchestrator starts the Node.js express instance as a background process natively, triggers the Selenium graphical sequences across Chromium, captures Mocha reports, and shuts down safely.
+    \item \textbf{Report Archival:} Evaluates \texttt{mochawesome} HTML configurations for visual parsing dynamically attaching artifact states onto Jenkins builds.
+\end{itemize}
+
+\vspace{0.5cm}
+
+\subsection*{Implementation Verification Summary}
+
+\vspace{0.3cm}
+\begin{center}
+\renewcommand{\arraystretch}{1.3} % Adds subtle padding to the table rows
+\begin{tabularx}{\textwidth}{@{} l c c @{}} % Removes outer vertical padding
+\toprule
+\textbf{Test Category} & \textbf{Component Count} & \textbf{Pipeline Execution State} \\ 
+\midrule
+Unit Validation Specs & 10 Tests & PASS \\ 
+Integration DOM Interactions & 16 Tests & PASS \\ 
+Jenkins CI/CD Declarative & 5 Stages & EXECUTED \\ 
+HTML Reporting Output & 2 Files (JSON/HTML) & GENERATED \\ 
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\end{document}

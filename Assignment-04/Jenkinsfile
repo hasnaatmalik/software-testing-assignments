@@ -1,0 +1,78 @@
+pipeline {
+    agent any
+
+    tools {
+        // Must match the name configured in Jenkins Global Tool Configuration
+        nodejs 'node'
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    echo 'Installing packages...'
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Run Unit Tests') {
+            steps {
+                script {
+                    echo 'Executing Unit Tests...'
+                    // Will continue to next stage even if unit tests fail to generate reports
+                    catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                        sh 'npm run test:unit'
+                    }
+                }
+            }
+        }
+
+        stage('Run Integration Tests') {
+            steps {
+                script {
+                    echo 'Executing Integration Tests...'
+                    // We spin up the server in background, run tests, and tear it down
+                    catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                        sh '''
+                        npm start & 
+                        SERVER_PID=$!
+                        sleep 5
+                        npm run test:integration
+                        kill $SERVER_PID
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Generate Reports') {
+            steps {
+                script {
+                    echo 'Archiving Mochawesome Reports...'
+                }
+                // Archiving HTML and JSON test results
+                archiveArtifacts artifacts: 'mochawesome-report/**/*', allowEmptyArchive: true
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline executed successfully!'
+        }
+        failure {
+            echo 'Pipeline execution failed! Check logs.'
+        }
+        always {
+            echo 'Cleaning up workspace...'
+            cleanWs()
+        }
+    }
+}
