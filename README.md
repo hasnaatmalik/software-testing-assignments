@@ -25,10 +25,22 @@ This repository contains the coursework and implementation tasks for the CS – 
 
 ---
 
+### [Assignment-04: Node.js Authentication App, Test Automation & CI/CD](./Assignment-04/)
+**Objective:** Develop a Node.js full-stack authentication application and implement an industrial testing methodology using the Page Object Model (POM) pattern. This includes Unit and Integration Testing with Mocha/Chai and Selenium WebDriver, coupled with Jenkins CI/CD pipeline automation.
+
+**Key Features:**
+- Node.js & Express Authentication Backend
+- Unit and Integration Testing with Mocha & Chai
+- UI Automation via Selenium WebDriver (POM Pattern)
+- Automated Test Reporting with Mochawesome
+- CI/CD Pipeline Configuration with Jenkins
+
+---
+
 ## 🛠️ Technology Stack
-- **Languages:** Java 17
-- **Testing Frameworks:** JUnit 5 (Jupiter), Apache POI
-- **Build Tools:** Maven
-- **Analysis:** JaCoCo
+- **Languages:** Java 17, JavaScript (Node.js)
+- **Testing Frameworks:** JUnit 5 (Jupiter), Apache POI, Mocha, Chai, Selenium WebDriver
+- **Build & CI/CD Tools:** Maven, Jenkins
+- **Analysis & Reporting:** JaCoCo, Mochawesome
 
 > *This repository strictly adheres to the Plagiarism guidelines and Originality of Work expectations set by the university.*
