@@ -1,0 +1,8 @@
+[tool.mutmut]
+paths_to_mutate = ["repositories/migration_context.py", "repositories/validator_agent.py"]
+tests_dir = ["repositories/"]
+runner = "./run_tests.sh"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "settings_for_test"
+python_files = ["test_*.py"]
